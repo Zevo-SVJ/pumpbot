@@ -1,18 +1,18 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Test · RUGIKK</title>
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name=apple-mobile-web-app-capable content=yes><meta name=mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=black-translucent><meta name=apple-mobile-web-app-title content=RUGIKK><meta name=theme-color content="#0a0604"><link rel=manifest href=/manifest.json><link rel=apple-touch-icon href=/apple-touch-icon.png><link rel=icon href=/favicon.png><title>Test · RUGIKK</title>
 <link rel=preconnect href=https://fonts.googleapis.com><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel=stylesheet>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:#f2f0ed}
-body{margin:0;background:#f2f0ed;font-family:Inter,-apple-system,"SF Pro Display",Roboto,sans-serif;color:#111;padding:6px 8px calc(96px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+body{margin:0;background:#f2f0ed;font-family:Inter,-apple-system,"SF Pro Display",Roboto,sans-serif;color:#111;padding:calc(6px + env(safe-area-inset-top)) calc(8px + env(safe-area-inset-right)) calc(96px + env(safe-area-inset-bottom)) calc(8px + env(safe-area-inset-left));-webkit-font-smoothing:antialiased}
 .mono{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace}
 /* HERO */
-.hero{position:relative;height:178px;border-radius:22px;overflow:hidden;color:#fff;
+.hero{position:relative;height:184px;border-radius:22px;overflow:hidden;color:#fff;
  background:radial-gradient(120% 95% at 8% 22%,#6b3212 0%,#3a1a0a 28%,#140905 55%,#060606 80%);box-shadow:0 6px 18px rgba(0,0,0,.18)}
-.blob{position:absolute;left:-46px;top:76px;width:216px;height:200px;will-change:transform;animation:float 4.6s ease-in-out infinite}
+.blob{position:absolute;left:-40px;top:72px;width:216px;height:200px;will-change:transform;animation:float 4.6s ease-in-out infinite}
 .blob .body{position:absolute;inset:0;border-radius:50% 50% 46% 46%/56% 56% 44% 44%;
  background:radial-gradient(70% 60% at 52% 28%,#fff 0%,#fbfbfb 45%,#e9e9e9 78%,#cdcdcd 100%);box-shadow:inset -10px -14px 26px rgba(0,0,0,.10),inset 8px 10px 18px rgba(255,255,255,.9)}
 .face{position:absolute;left:96px;top:36px;width:110px;height:80px;transition:transform .5s cubic-bezier(.3,1.4,.5,1);animation:glance 9s ease-in-out infinite}
-.eye{position:absolute;width:18px;height:40px;transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+.eye{position:absolute;width:20px;height:44px;transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
 .eye.l{left:4px;top:30px;transform:rotate(-24deg)}.eye.r{left:58px;top:6px;transform:rotate(-24deg)}
 .eye i{position:absolute;inset:0;transition:opacity .3s,transform .45s cubic-bezier(.3,1.3,.5,1)}
 .eye .o{background:#111;border-radius:50%;transform-origin:50% 50%;animation:blink 5.2s infinite}
@@ -28,27 +28,27 @@ body{margin:0;background:#f2f0ed;font-family:Inter,-apple-system,"SF Pro Display
 .sad .eye.l{transform:rotate(-10deg)}.sad .eye.r{transform:rotate(-10deg)}
 .happy .eye.l,.happy .eye.r{transform:rotate(-10deg)}
 .hesitant .brow{opacity:1}.hesitant .brow.l{transform:rotate(14deg)}.hesitant .brow.r{transform:rotate(-22deg) translateY(-3px)}
-.hesitant .eye .o{transform:scale(.85)}
+.hesitant .eye.l,.hesitant .eye.r{transform:rotate(-14deg) scale(.88)}
 .focused .brow{opacity:1}.focused .brow.l{transform:rotate(-4deg) translateY(4px)}.focused .brow.r{transform:rotate(-4deg) translateY(4px)}
-.focused .eye.l,.focused .eye.r{transform:rotate(0)}.focused .eye .o{transform:scale(.8,.62) translateY(6px)}
-.excited .eye .o{transform:scale(1.25,1.18)}.excited .blob{animation:bounce .5s cubic-bezier(.3,1.6,.5,1) 2,float 4.6s 1s ease-in-out infinite}
+.focused .eye.l,.focused .eye.r{transform:rotate(0) translateY(8px) scale(.85,.6)}
+.excited .eye.l,.excited .eye.r{transform:rotate(-24deg) scale(1.25,1.18)}.excited .blob{animation:bounce .5s cubic-bezier(.3,1.6,.5,1) 2,float 4.6s 1s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.012,.99)}}
 @keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px) scale(.98,1.03)}}
 @keyframes blink{0%,94%,100%{transform:scaleY(1)}96.5%{transform:scaleY(.08)}}
 @keyframes glance{0%,40%,100%{translate:0 0}45%,58%{translate:6px -2px}63%,75%{translate:-3px 1px}80%{translate:0 0}}
-.ht{position:absolute;z-index:2;left:43.5%;top:14px;right:12px}
-.ht h1{margin:0;font-size:24px;font-weight:800;letter-spacing:-.6px;line-height:1.05}
+.ht{position:absolute;z-index:2;left:43.5%;top:12px;right:12px}
+.ht h1{margin:0;font-size:22px;font-weight:800;letter-spacing:-.6px;line-height:1.05}
 .pill{display:inline-block;background:#ff5a1f;color:#fff;font-weight:800;font-size:9px;letter-spacing:.2px;padding:3px 6px;border-radius:4px;margin-top:4px;box-shadow:0 0 0 1px rgba(255,140,80,.45)}
 .live{position:absolute;right:13px;top:20px;color:#22c55e;font-weight:700;font-size:10.5px;letter-spacing:.3px;display:flex;align-items:center;gap:4px}
 .live:before{content:"";width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pl 1.6s infinite}
 @keyframes pl{50%{opacity:.35}}
-.lbl{color:#9a9a9a;font-size:10.5px;font-weight:600;margin-top:13px;letter-spacing:.2px}
-.big{font-size:42px;font-weight:800;color:#2ecc71;letter-spacing:-1.6px;line-height:1.02;margin-top:2px;font-variant-numeric:tabular-nums}.big.neg{color:#ff5c5c}
-.sol{color:#bdbdbd;font-size:12.5px;font-weight:700;margin-top:4px;letter-spacing:.3px}
-.row{margin-top:9px;font-size:12.5px;color:#a8a8a8;display:flex;align-items:center;gap:7px;white-space:nowrap}
-.mult{background:#fff;color:#111;font-weight:800;padding:2px 7px;border-radius:9px;font-size:12.5px}
-.goal{position:absolute;right:12px;bottom:23px;font-size:8.5px;color:#9a9a9a;font-weight:600}.goal.done{color:#22c55e}
-.bar{position:absolute;left:43.5%;right:12px;bottom:12px;height:5px;background:#333;border-radius:3px;overflow:hidden}
+.lbl{color:#9a9a9a;font-size:10.5px;font-weight:600;margin-top:10px;letter-spacing:.2px}
+.big{font-size:37px;font-weight:800;color:#2ecc71;letter-spacing:-1.6px;line-height:1.02;margin-top:2px;font-variant-numeric:tabular-nums}.big.neg{color:#ff5c5c}
+.sol{color:#bdbdbd;font-size:11.5px;font-weight:700;margin-top:3px;letter-spacing:.3px}
+.row{margin-top:7px;font-size:11.5px;color:#a8a8a8;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.mult{background:#fff;color:#111;font-weight:800;padding:2px 7px;border-radius:9px;font-size:11.5px}
+.goal{position:absolute;right:12px;bottom:20px;font-size:8.5px;color:#9a9a9a;font-weight:600}.goal.done{color:#22c55e}
+.bar{position:absolute;left:43.5%;right:12px;bottom:11px;height:5px;background:#333;border-radius:3px;overflow:hidden}
 .bar i{display:block;height:100%;width:100%;background:#ff5a1f;border-radius:3px;transform-origin:0 50%;transform:scaleX(0);transition:transform 1.2s cubic-bezier(.2,.8,.2,1),background .4s}.bar.done i{background:#22c55e}
 /* cards */
 .card{background:#fff;border-radius:16px;padding:11px 12px;margin-top:8px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
@@ -71,7 +71,7 @@ h2{font-size:15.5px;font-weight:800;letter-spacing:-.3px;margin:14px 3px 8px;dis
 .pos{font-size:11.5px;color:#444;display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f2f2f2}
 /* chat */
 #chatc{cursor:pointer;position:relative;z-index:5;padding-bottom:6px}
-#chatc.open{position:fixed;left:8px;right:8px;bottom:calc(84px + env(safe-area-inset-bottom));overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,.12);transition:clip-path .45s cubic-bezier(.2,.8,.2,1)}
+#chatc.open{position:fixed;z-index:15;left:8px;right:8px;bottom:calc(84px + env(safe-area-inset-bottom));overflow:hidden;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(0,0,0,.12);transition:clip-path .45s cubic-bezier(.2,.8,.2,1)}
 #chatc.open #chat{overflow-y:auto;flex:1;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .cu{display:flex;gap:7px;align-items:center}.cu b{font-size:13px;font-weight:800}.cu small{color:#8f8f8f;font-size:9.5px;display:block}
 .lo{width:22px;height:22px;border-radius:50%;border:2.5px solid #111;position:relative;flex:none}
