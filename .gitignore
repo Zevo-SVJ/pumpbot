@@ -1,0 +1,8 @@
+venv/
+trades.db
+cloudflared
+*.log
+*.pid
+screenshots/
+status.json
+__pycache__/
