@@ -8,10 +8,10 @@ body{margin:0;background:#f2f0ed;font-family:Inter,-apple-system,"SF Pro Display
 /* HERO */
 .hero{position:relative;height:184px;border-radius:22px;overflow:hidden;color:#fff;
  background:radial-gradient(120% 95% at 8% 22%,#6b3212 0%,#3a1a0a 28%,#140905 55%,#060606 80%);box-shadow:0 6px 18px rgba(0,0,0,.18)}
-.blob{position:absolute;left:-40px;top:72px;width:216px;height:200px;will-change:transform;animation:float 4.6s ease-in-out infinite}
+.blob{position:absolute;left:-38px;top:82px;width:184px;height:172px;will-change:transform;animation:float 4.6s ease-in-out infinite}
 .blob .body{position:absolute;inset:0;border-radius:50% 50% 46% 46%/56% 56% 44% 44%;
  background:radial-gradient(70% 60% at 52% 28%,#fff 0%,#fbfbfb 45%,#e9e9e9 78%,#cdcdcd 100%);box-shadow:inset -10px -14px 26px rgba(0,0,0,.10),inset 8px 10px 18px rgba(255,255,255,.9)}
-.face{position:absolute;left:96px;top:36px;width:110px;height:80px;transition:transform .5s cubic-bezier(.3,1.4,.5,1);animation:glance 9s ease-in-out infinite}
+.face{position:absolute;left:78px;top:30px;width:96px;height:72px;scale:.88;transform-origin:0 0;transition:transform .5s cubic-bezier(.3,1.4,.5,1);animation:glance 9s ease-in-out infinite}
 .eye{position:absolute;width:20px;height:44px;transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
 .eye.l{left:4px;top:30px;transform:rotate(-24deg)}.eye.r{left:58px;top:6px;transform:rotate(-24deg)}
 .eye i{position:absolute;inset:0;transition:opacity .3s,transform .45s cubic-bezier(.3,1.3,.5,1)}
@@ -45,9 +45,9 @@ body{margin:0;background:#f2f0ed;font-family:Inter,-apple-system,"SF Pro Display
 .lbl{color:#9a9a9a;font-size:10.5px;font-weight:600;margin-top:10px;letter-spacing:.2px}
 .big{font-size:37px;font-weight:800;color:#2ecc71;letter-spacing:-1.6px;line-height:1.02;margin-top:2px;font-variant-numeric:tabular-nums}.big.neg{color:#ff5c5c}
 .sol{color:#bdbdbd;font-size:11.5px;font-weight:700;margin-top:3px;letter-spacing:.3px}
-.row{margin-top:7px;font-size:11.5px;color:#a8a8a8;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.row{margin-top:5px;font-size:11.5px;color:#a8a8a8;display:flex;align-items:center;gap:7px;white-space:nowrap}
 .mult{background:#fff;color:#111;font-weight:800;padding:2px 7px;border-radius:9px;font-size:11.5px}
-.goal{position:absolute;right:12px;bottom:20px;font-size:8.5px;color:#9a9a9a;font-weight:600}.goal.done{color:#22c55e}
+.goal{position:absolute;right:12px;bottom:17px;font-size:8.5px;color:#9a9a9a;font-weight:600}.goal.done{color:#22c55e}
 .bar{position:absolute;left:43.5%;right:12px;bottom:11px;height:5px;background:#333;border-radius:3px;overflow:hidden}
 .bar i{display:block;height:100%;width:100%;background:#ff5a1f;border-radius:3px;transform-origin:0 50%;transform:scaleX(0);transition:transform 1.2s cubic-bezier(.2,.8,.2,1),background .4s}.bar.done i{background:#22c55e}
 /* cards */
@@ -143,12 +143,25 @@ function draw(d){const m=d.equity/d.start,pf=cur;cur=d.profit;
   return `<div class="t${t.pnl<0?' l':''}${i==0&&t.pnl>=0?' first':''}" style="border-color:${C[t.agent]};${nw?'':'animation:none'}"><div class=n><span class=av style="background:${AVC[(t.sym.charCodeAt(0)||0)%9]}">${esc((t.sym[0]||'?').toUpperCase())}</span>$${esc(t.sym.toUpperCase())}</div><div class=p><b>${t.pct>=0?'+':''}${t.pct.toFixed(0)}%</b><span>${f(t.pnl)}</span></div></div>`}).join('')||'<div class=empty>No closed trades yet — agents are scanning launches…</div>';
  $('posc').style.display=d.pos.length?'':'none';$('pn').textContent=d.pos.length+' open';
  $('pos').innerHTML=d.pos.map(p=>`<div class=pos><span><span class=dot style="background:${C[p.agent]}"></span>$${esc(p.sym.toUpperCase())} · ${p.agent}</span><span class=mono style="color:${p.ch>=0?'#1e9e55':'#e05252'}">${(p.ch*100).toFixed(1)}% · $${p.cost.toFixed(0)}</span></div>`).join('');
- const msgs=d.chat.slice(0,open?12:4).reverse();
- $('chat').innerHTML=(msgs.map(c=>{const k=c.t+c.m,nw=!chatSeen.has(k)&&!first;chatSeen.add(k);const cls=C[c.a]?'':c.a=='me'?' me':' bot';
+ ingest(d);renderChat();
+ emotion(d);first=false}
+function renderChat(){const msgs=stream.slice(-(open?14:4));
+ $('chat').innerHTML=(msgs.map(c=>{const nw=!c.shown&&!c.init;c.shown=1;const cls=C[c.a]?'':c.a=='me'?' me':' bot';
   return `<div class="bub${cls}" style="--c:${C[c.a]||'#ccc'};${nw?'':'animation:none'}">${esc(c.m)}</div>`}).join('')||'<div class=bub style="--c:#ccc">scanning new pump.fun launches…</div>')
   +'<div class="bub typing" style="--c:#ccc;animation:none"><span></span><span></span><span></span></div>'+(open?'<div class=hint>tap to collapse</div>':'');
- if(open){const c=$('chat');c.scrollTop=c.scrollHeight}
- emotion(d);first=false}
+ if(open){const c=$('chat');c.scrollTop=c.scrollHeight}}
+// chat stream: engine chat + throttled, de-duplicated live feed
+const stream=[],fq=[],fSeen=new Map(),AG=Object.keys(C);
+function feedMsg(line){const x=line.replace(/^\S+\s+/,'').replace(/^[^\w$]+/,'').trim(),m=x.match(/^skip (\$\S+?):\s*(.*)$/);if(!m)return x?{m:x,k:x}:null;
+ const sym=m[1],rs=m[2].split(';').map(r=>r.trim()).filter(Boolean),rc=rs.find(r=>/^rugcheck:/i.test(r)),r0=(rs[0]||'').replace(/^only 0 buys/,'no buyers');
+ const txt=rc?`rugcheck ${sym} → ${rc.replace(/^rugcheck:\s*/i,'').toLowerCase()}, skip`:`checking ${sym} → skip: ${r0}`;return {m:txt,k:sym+'|'+r0}}
+function ingest(d){const init=first;
+ d.chat.slice().reverse().forEach(c=>{const k=c.t+c.m;if(chatSeen.has(k))return;chatSeen.add(k);stream.push({a:c.a,m:c.m,init})});
+ d.feed.slice().reverse().forEach(l=>{const f=feedMsg(l);if(!f)return;const now=Date.now(),last=fSeen.get(f.k);
+  if(last&&now-last<90000)return;fSeen.set(f.k,now);if(init)return;if(fq.length<6)fq.push({a:AG[([...f.k].reduce((h,c)=>h*31+c.charCodeAt(0)|0,0)>>>0)%4],m:f.m})});
+ if(init&&!stream.length){d.feed.slice(0,3).reverse().forEach((l,i)=>{const f=feedMsg(l);if(f)stream.push({a:AG[i%4],m:f.m,init:1})})}
+ while(stream.length>40)stream.shift()}
+setInterval(()=>{if(fq.length){stream.push(fq.shift());renderChat()}},2600);
 // chat expand / collapse
 $('chatc').onclick=()=>{const c=$('chatc'),r0=c.getBoundingClientRect(),gt=$('grid').getBoundingClientRect().top-8;
  if(!open){open=true;const top=Math.max(8,gt);c.style.top=top+'px';c.classList.add('open');

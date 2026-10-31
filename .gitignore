@@ -6,3 +6,4 @@ cloudflared
 screenshots/
 status.json
 __pycache__/
+.mirror_token

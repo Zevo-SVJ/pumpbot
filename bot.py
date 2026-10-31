@@ -189,18 +189,28 @@ def stats():
       closedT=[dict(sym=r[0],pnl=r[1],pct=r[1]/(r[2]-r[1])*100 if r[2]-r[1] else 0,agent=r[3]) for r in rows[:30]],
       pos=[dict(sym=p["sym"],agent=p["agent"],cost=p["cost"],ch=p["price"]/p["entry"]-1) for p in S["positions"].values()],
       chat=S["chat"][:12],feed=S["feed"][:40],rules=S["rule_log"][:10])
+MIRROR_MODE=os.environ.get("MIRROR_MODE")=="1"; MIRROR_TOKEN=os.environ.get("MIRROR_TOKEN",""); MIR={"t":0,"d":None}
+def snapshot():
+    if MIR["d"] is not None and (MIRROR_MODE or time.time()-MIR["t"]<15): return MIR["d"]
+    return stats()
 class H(BaseHTTPRequestHandler):
+    def do_POST(s):
+        if s.path.split("?")[0]!="/ingest" or not MIRROR_TOKEN or s.headers.get("Authorization","")!="Bearer "+MIRROR_TOKEN:
+            s.send_response(403); s.end_headers(); return
+        try: d=json.loads(s.rfile.read(int(s.headers.get("Content-Length","0"))))
+        except Exception: s.send_response(400); s.end_headers(); return
+        MIR["d"]=d; MIR["t"]=time.time(); s.send_response(204); s.end_headers()
     def log_message(s,*a): pass
     def do_GET(s):
         if s.path.startswith("/events"):
             s.send_response(200); s.send_header("Content-Type","text/event-stream"); s.send_header("Cache-Control","no-cache"); s.end_headers()
             try:
-                while True: s.wfile.write(("data: "+json.dumps(stats())+"\n\n").encode()); s.wfile.flush(); time.sleep(2)
+                while True: s.wfile.write(("data: "+json.dumps(snapshot())+"\n\n").encode()); s.wfile.flush(); time.sleep(2)
             except Exception: return
         p=s.path.split("?")[0]
         if p in STATIC:
             b=open(os.path.join(HERE,"static",p.lstrip("/")),"rb").read(); ct=STATIC[p]
-        elif p.startswith("/api"): b=json.dumps(stats()).encode(); ct="application/json"
+        elif p.startswith("/api"): b=json.dumps(snapshot()).encode(); ct="application/json"
         else: b=PAGE().encode(); ct="text/html; charset=utf-8"
         s.send_response(200); s.send_header("Content-Type",ct); s.send_header("Content-Length",str(len(b))); s.send_header("Cache-Control","no-cache"); s.end_headers(); s.wfile.write(b)
 def snap():
@@ -211,6 +221,7 @@ def snap():
 if __name__=="__main__":
     threading.Thread(target=ThreadingHTTPServer(("0.0.0.0",PORT),H).serve_forever,daemon=True).start()
     threading.Thread(target=snap,daemon=True).start()
+    while MIRROR_MODE: time.sleep(3600)
     while True:
         try: asyncio.run(main())
         except Exception as e: print("reconnect after error:",e,flush=True); time.sleep(5)
